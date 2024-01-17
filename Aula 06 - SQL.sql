@@ -1,0 +1,148 @@
+-- CRIACAO DE TABELAS 
+
+CREATE TABLE Canal (
+CanalId INT,
+Nome VARCHAR(150) NOT NULL,
+ContagemInscritos INT DEFAULT 0,
+DataCriacao DATE NOT NULL,
+PRIMARY KEY (CanalId)
+);
+
+CREATE TABLE Video (
+VideoId INT,
+Nome VARCHAR(150) NOT NULL,
+Visualizacoes INT DEFAULT 0,
+Likes INT DEFAULT 0,
+Dislikes INT DEFAULT 0,
+Duracao INT NOT NULL,
+CanalId INT,
+PRIMARY KEY (VideoId),
+FOREIGN KEY (CanalId) REFERENCES Canal(CanalId) 
+);
+
+SELECT * 
+FROM Canal;
+
+SELECT * 
+FROM Video;
+
+
+-- SELECT INTO - COPIAS DE TABELAS
+
+SELECT * INTO TabelaNova
+FROM Canal; -- NAO FUNCIONA
+
+CREATE TABLE TabelaNova SELECT * FROM Canal;
+
+SELECT * 
+FROM TabelaNova;
+
+
+-- INSERT INTO - PREENCHIMENTO DE TABELAS
+
+INSERT INTO Canal(CanalId, Nome, ContagemInscritos, DataCriacao)
+VALUES 
+(1,'Eduardo',800,'2023-03-16'),
+(2,'Marina',1800,'2023-03-16'),
+(3,'Julia',770,'2023-03-18'),
+(4,'Fernando',500,'2023-03-12'),
+(5,'Davi',660,'2023-03-08');
+
+
+-- UPDATE - ATUALIZACAO DE TABELAS
+
+SELECT * 
+FROM Canal;
+
+UPDATE Canal
+SET CanalId = 7,
+    Nome = 'David'
+WHERE CanalId = 5;
+
+
+-- DELETE - APAGAR DADOS DE TABELAS
+
+SELECT * 
+FROM Canal;
+
+DELETE FROM Canal
+WHERE Nome = 'Julia' AND CanalId <> 0;
+
+DELETE FROM Canal
+WHERE CanalId <> 0;
+
+TRUNCATE TABLE Canal;
+
+
+-- ALTER TABLE - AJUSTAR COLUNAS DE TABELAS
+
+SELECT * 
+FROM Canal;
+
+ALTER TABLE Canal
+ADD Novo BIT,
+ADD Col VARCHAR(12); 
+
+ALTER TABLE Canal
+MODIFY COLUMN Novo VARCHAR(30);
+
+ALTER TABLE Canal
+MODIFY COLUMN Col VARCHAR(15);
+
+ALTER TABLE Canal
+DROP COLUMN Novo,
+DROP COLUMN Col;
+
+ALTER TABLE Canal
+RENAME Canal1;
+
+
+-- DROP TABLE - REMOVER TABELAS
+
+DROP TABLE Video;
+DROP TABLE Canal;
+DROP TABLE Canal1;
+
+SELECT * 
+FROM Canal;
+
+SELECT * 
+FROM Video;
+
+
+-- CONSTRAINT
+
+CREATE TABLE Canal (
+CanalId INT,
+Nome VARCHAR(150) NOT NULL,
+ContagemInscritos INT DEFAULT 0,
+Idade INT CHECK(Idade >= 18),
+Codigo INT NOT NULL UNIQUE,
+PRIMARY KEY (CanalId)
+);
+
+INSERT INTO Canal (CanalId,Nome,ContagemInscritos,Idade,Codigo)
+VALUES (1, 'Eduardo', 200, 15,20000);
+
+INSERT INTO Canal (CanalId,Nome,ContagemInscritos,Idade,Codigo)
+VALUES (1, 'Eduardo', 200, 18, 20000);
+
+INSERT INTO Canal (CanalId,Nome,ContagemInscritos,Idade,Codigo)
+VALUES (2, null ,400, 20, 30000);
+
+INSERT INTO Canal (CanalId,Nome,ContagemInscritos,Idade,Codigo)
+VALUES (3, 'Eduardo', 400, 20, 20000);
+
+
+
+-- COMANDO VIEW - SALVANDO UMA TABELA APOS CONSULTA
+
+CREATE VIEW TABELA1 AS
+SELECT * 
+FROM Canal;
+
+SELECT * 
+FROM TABELA1;
+
+DROP VIEW TABELA1;
+

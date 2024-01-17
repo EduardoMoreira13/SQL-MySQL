@@ -1,0 +1,69 @@
+-- COMANDO INNER JOIN
+
+SELECT *
+FROM banco.produtos;
+
+SELECT *
+FROM banco.pedidos;
+
+SELECT A.ID_Produto, A.Receita_Venda, B.Nome_Produto, B.ID_Produto 
+FROM banco.pedidos AS A
+INNER JOIN banco.produtos AS B ON A.ID_Produto = B.ID_Produto;
+
+
+-- COMANDO LEFT JOIN OU LEFT OUTER JOIN
+
+SELECT A.ID_Produto, A.Receita_Venda, B.Nome_Produto, B.ID_Produto 
+FROM banco.pedidos AS A
+LEFT JOIN banco.produtos AS B ON A.ID_Produto = B.ID_Produto;
+
+SELECT A.ID_Produto, A.Receita_Venda, B.Nome_Produto, B.ID_Produto 
+FROM banco.pedidos AS A
+LEFT JOIN banco.produtos AS B ON A.ID_Produto = B.ID_Produto
+WHERE B.ID_Produto IS NULL;
+
+
+-- COMANDO RIGHT JOIN OU RIGHT OUTER JOIN
+
+SELECT A.ID_Produto, A.Receita_Venda, B.Nome_Produto, B.ID_Produto 
+FROM banco.pedidos AS A
+RIGHT JOIN banco.produtos AS B ON A.ID_Produto = B.ID_Produto;
+
+SELECT A.ID_Produto, A.Receita_Venda, B.Nome_Produto, B.ID_Produto 
+FROM banco.pedidos AS A
+RIGHT JOIN banco.produtos AS B ON A.ID_Produto = B.ID_Produto
+WHERE A.ID_Produto IS NULL;
+
+
+-- COMANDO UNION
+
+SELECT Nome, Sobrenome
+FROM banco.clientes
+WHERE Nome LIKE '%a'
+UNION -- RETIRA DUPLICADOS
+SELECT Nome, Sobrenome
+FROM banco.clientes
+WHERE Nome LIKE 'a%';
+
+SELECT Nome, Sobrenome
+FROM banco.clientes
+WHERE Nome LIKE '%a'
+UNION ALL -- NAO RETIRA DUPLICADOS
+SELECT Nome, Sobrenome
+FROM banco.clientes
+WHERE Nome LIKE 'a%';
+
+
+-- COMANDO SELF JOIN
+
+SELECT *
+FROM banco.clientes;
+
+SELECT A.Nome, A.Sobrenome, B.Nome, B.Sobrenome
+FROM banco.clientes AS A, banco.clientes AS B
+WHERE A.Nome = B.Nome;
+
+SELECT A.Nome, A.Sobrenome, B.Nome, B.Sobrenome
+FROM banco.clientes AS A, banco.clientes AS B
+WHERE A.Nome = B.Nome AND A.Sobrenome <> B.Sobrenome
+ORDER BY A.Nome;

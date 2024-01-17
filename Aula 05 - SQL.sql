@@ -1,0 +1,78 @@
+-- COMANDO SUBQUERY (SUBSELECT) 
+
+SELECT ID_Produto
+FROM banco.produtos;
+
+SELECT ID_Produto
+FROM banco.pedidos;
+
+SELECT ID_Produto, Nome_Produto
+FROM banco.produtos
+WHERE ID_Produto IN (SELECT ID_Produto FROM banco.pedidos);
+
+
+SELECT AVG(Receita_Venda) FROM banco.pedidos;
+
+SELECT *
+FROM banco.pedidos
+WHERE Receita_Venda > (SELECT AVG(Receita_Venda) FROM banco.pedidos);
+
+
+-- MANIPULACAO DE STRINGS - TEXTOS
+
+SELECT Nome, Sobrenome
+FROM banco.clientes;
+
+SELECT CONCAT(Nome, ' ',Sobrenome) AS Nome
+FROM banco.clientes;
+
+SELECT Nome, UPPER(Nome), LOWER(Nome), LENGTH(Nome)
+FROM banco.clientes;
+
+SELECT Nome, SUBSTRING(Nome, 1, 3), SUBSTRING(Nome, 3, 2)
+FROM banco.clientes;
+
+SELECT Nome, REPLACE(Nome, 'a', 'XXXXX')
+FROM banco.clientes;
+
+
+-- OPERACOES MATEMATICAS
+
+SELECT Renda_Anual, Qtd_Filhos, Renda_Anual - Renda_Anual AS DIF, Renda_Anual + Qtd_Filhos AS SOMA
+FROM banco.clientes;
+
+SELECT Renda_Anual, Qtd_Filhos, Renda_Anual / Renda_Anual AS DIVIS, Renda_Anual * Qtd_Filhos AS MULT
+FROM banco.clientes;
+
+SELECT SUM(Qtd_Filhos), AVG(Qtd_Filhos), MIN(Qtd_Filhos), MAX(Qtd_Filhos)
+FROM banco.clientes;
+
+SELECT Qtd_Filhos, SQRT(Qtd_Filhos), ROUND(Qtd_Filhos/3, 2), POWER(Qtd_Filhos,2), EXP(Qtd_Filhos)
+FROM banco.clientes;
+
+
+-- COMANDO DE DATAS - NAO USA O DATEPART
+ 
+SELECT Data_Nascimento
+FROM banco.clientes;
+
+SELECT Data_Nascimento, YEAR(Data_Nascimento), MONTH(Data_Nascimento), DAY(Data_Nascimento)
+FROM banco.clientes;
+
+SELECT Data_Nascimento, DAYNAME(Data_Nascimento), DAYOFMONTH(Data_Nascimento), DAYOFYEAR(Data_Nascimento)
+FROM banco.clientes;
+
+SELECT Data_Nascimento, WEEK(Data_Nascimento), WEEKDAY(Data_Nascimento), WEEKOFYEAR(Data_Nascimento)
+FROM banco.clientes;
+
+SELECT Data_Nascimento, MONTHNAME(Data_Nascimento), DAYOFWEEK(Data_Nascimento), YEARWEEK(Data_Nascimento)
+FROM banco.clientes;
+
+SELECT Data_Nascimento, YEAR(Data_Nascimento), YEAR(Data_Nascimento) + 7, CURDATE(),
+       YEAR(CURDATE()) - YEAR(Data_Nascimento)
+FROM banco.clientes;
+
+SELECT MONTH(Data_Nascimento) AS Mes,  MONTHNAME(Data_Nascimento), SUM(Renda_Anual)
+FROM banco.clientes
+GROUP BY MONTH(Data_Nascimento), MONTHNAME(Data_Nascimento)
+ORDER BY MONTH(Data_Nascimento);
