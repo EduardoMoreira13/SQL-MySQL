@@ -1,4 +1,4 @@
-# SQL-MySQL
+# SQL-MySQL - Principais Queries
 
 MySQL - Principais Queries
 
